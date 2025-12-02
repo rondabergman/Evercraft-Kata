@@ -28,6 +28,7 @@ namespace Evercraft_Kata.Tests.ActionsTests
                 int initialHitPoints = defender.HitPoints;
 
                 initialHitPoints = defender.HitPoints;
+                // Using the AttackMockNo20 to ensure a roll of less than 20
                 new AttackMockNo20().ExecuteAttack(attacker, defender);
                 Assert.Equal(initialHitPoints - 1, defender.HitPoints);
             }
@@ -44,6 +45,7 @@ namespace Evercraft_Kata.Tests.ActionsTests
 
                 // Mocking a miss by setting a high armor class
                 defender.ArmorClass = 21;
+                // Using the AttackMockNo20 to ensure a roll of less than 20
                 new AttackMockNo20().ExecuteAttack(attacker, defender);
                 Assert.Equal(initialHitPoints, defender.HitPoints);
             }
@@ -60,6 +62,7 @@ namespace Evercraft_Kata.Tests.ActionsTests
 
                 // Mocking a miss by setting a high armor class
                 defender.ArmorClass = 21;
+                // Using the AttackMockAlways20 to ensure a roll of 20
                 new AttackMockAlways20().ExecuteAttack(attacker, defender);
                 Assert.Equal(initialHitPoints -2, defender.HitPoints);
             }
@@ -76,6 +79,24 @@ namespace Evercraft_Kata.Tests.ActionsTests
                 // Using the AttackMockAlways20 to ensure a roll of 20
                 new AttackMockAlways20().ExecuteAttack(attacker, defender);
                 Assert.Equal(initialHitPoints - 2, defender.HitPoints);
+            }
+        }
+
+        [Fact]
+        public void AttackOnDefenderWith1HitPointKillsDefender()
+        {
+            for (int i = 0; i < 100; i++) // Multiple attempts to ensure miss
+            {
+                var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
+                var defender = new Evercraft_Kata.Chracters.Character("Defender");
+                int initialHitPoints = defender.HitPoints;
+                // Mocking a hit by setting a low armor class
+                defender.ArmorClass = 1;
+                // Moking a kill shot by setting hit points to 1
+                defender.HitPoints = 1;
+                // Using the AttackMockNo20 to ensure a roll of less than 20
+                new AttackMockNo20().ExecuteAttack(attacker, defender);
+                Assert.False(defender.Alive);
             }
         }
     }
