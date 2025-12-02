@@ -1,38 +1,84 @@
-# Java
-*.class
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]eleases/
+[Rr]eleasesPublic/
+[Oo]utput/
+[Ll]og/
+[Ll]ogs/
 
-# Intellij
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# MonoDevelop
+*.userprefs
+
+# Auto-generated files by Visual Studio
+*.ncb
+*.suo
+*.sdf
+*.cache
+*.dbmdl
+*.opendb
+*.pdb
+*.psess
+*.vsp
+*.vsps
+*.vssscc
+*.vssscc
+*.vsix
+*.vsixmanifest
+*.vscode/
+.vscode/
+
+# NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+.nuget/
+packages/
+project.lock.json
+project.fragment.lock.json
+*.csproj.user
+
+# Tye
+.tye/
+
+# Rider
 .idea/
-*.iml
-*.iws
-*.eml
-out/
 
-# Eclipse
-*.pydevproject
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.settings/
-.loadpath
-.classpath
-.project
-RemoteSystemsTempFiles/
-.externalToolBuilders/
-*.launch
-.cproject
-.buildpath
+# JetBrains Rider
+.idea/
 
-# Gradle
-build/
-.gradle/
-gradle.properties
-
-# Others
+# Backup files
 *~
-.DS_Store
+*.bak
+*.tmp
+
+# Folder-specific ignores
+# Exclude folder for build output
+bin/
+obj/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# VS Code settings
+.vscode/
+
+# Other
+*.suo
+*.sln.docstates
+*.db
+*.db-shm
+*.db-wal
+*.v2
+*.vsidx
+*.testlog
+*.manifest
+/.vs/Evercraft-Kata/v17/DocumentLayout.backup.json
+/.vs/Evercraft-Kata/v17/DocumentLayout.json
+*.bin
