@@ -19,7 +19,7 @@ namespace Evercraft_Kata.Tests.ActionsTests
         [Fact]
         public void AttackReducesHitPointsOnSuccessfulHit()
         {
-            for (int i = 0; i < 100; i++) // Multiple attempts to ensure hit
+            for (int i = 0; i < 100; i++) // Multiple attempts to ensure working
             {
                 var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
                 var defender = new Evercraft_Kata.Chracters.Character("Defender");
@@ -37,7 +37,7 @@ namespace Evercraft_Kata.Tests.ActionsTests
         [Fact]
         public void AttackDoesNotReduceHitPointsOnMiss()
         {
-            for (int i = 0; i < 100; i++) // Multiple attempts to ensure miss
+            for (int i = 0; i < 100; i++) // Multiple attempts to ensure working
             {
                 var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
                 var defender = new Evercraft_Kata.Chracters.Character("Defender");
@@ -54,7 +54,7 @@ namespace Evercraft_Kata.Tests.ActionsTests
         [Fact]
         public void AttackReducesHitPointsWith20RollAndArmorOver20()
         {
-            for (int i = 0; i < 100; i++) // Multiple attempts to ensure miss
+            for (int i = 0; i < 100; i++) // Multiple attempts to ensure working
             {
                 var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
                 var defender = new Evercraft_Kata.Chracters.Character("Defender");
@@ -71,7 +71,7 @@ namespace Evercraft_Kata.Tests.ActionsTests
         [Fact]
         public void RollOf20DoublesHitPointReduction()
         {
-            for (int i = 0; i < 100; i++) // Multiple attempts to ensure hit
+            for (int i = 0; i < 100; i++) // Multiple attempts to ensure working
             {
                 var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
                 var defender = new Evercraft_Kata.Chracters.Character("Defender");
@@ -85,7 +85,7 @@ namespace Evercraft_Kata.Tests.ActionsTests
         [Fact]
         public void AttackOnDefenderWith1HitPointKillsDefender()
         {
-            for (int i = 0; i < 100; i++) // Multiple attempts to ensure miss
+            for (int i = 0; i < 100; i++) // Multiple attempts to ensure working
             {
                 var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
                 var defender = new Evercraft_Kata.Chracters.Character("Defender");
@@ -96,7 +96,7 @@ namespace Evercraft_Kata.Tests.ActionsTests
                 defender.HitPoints = 1;
                 // Using the AttackMockNo20 to ensure a roll of less than 20
                 new AttackMockNo20().ExecuteAttack(attacker, defender);
-                Assert.False(defender.Alive);
+                Assert.False(defender.IsAlive);
             }
         }
     }

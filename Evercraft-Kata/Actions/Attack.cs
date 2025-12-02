@@ -23,6 +23,11 @@ namespace Evercraft_Kata.Actions
             {
                 defender.HitPoints -= 1;
             }
+
+            if (defender.HitPoints == 0)
+            {
+                defender.IsAlive = false;
+            }
         }
     }
 }
