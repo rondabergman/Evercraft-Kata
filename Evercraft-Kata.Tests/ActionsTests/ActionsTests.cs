@@ -46,12 +46,11 @@ namespace Evercraft_Kata.Tests.ActionsTests
                 defender.ArmorClass = 21;
                 new AttackMockNo20().ExecuteAttack(attacker, defender);
                 Assert.Equal(initialHitPoints, defender.HitPoints);
-
             }
         }
 
         [Fact]
-        public void AttackReducesHitPointsWith20Roll()
+        public void AttackReducesHitPointsWith20RollAndArmorOver20()
         {
             for (int i = 0; i < 100; i++) // Multiple attempts to ensure miss
             {
@@ -62,10 +61,22 @@ namespace Evercraft_Kata.Tests.ActionsTests
                 // Mocking a miss by setting a high armor class
                 defender.ArmorClass = 21;
                 new AttackMockAlways20().ExecuteAttack(attacker, defender);
-                Assert.Equal(initialHitPoints -1, defender.HitPoints);
-
+                Assert.Equal(initialHitPoints -2, defender.HitPoints);
             }
         }
 
+        [Fact]
+        public void RollOf20DoublesHitPointReduction()
+        {
+            for (int i = 0; i < 100; i++) // Multiple attempts to ensure hit
+            {
+                var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
+                var defender = new Evercraft_Kata.Chracters.Character("Defender");
+                int initialHitPoints = defender.HitPoints;
+                // Using the AttackMockAlways20 to ensure a roll of 20
+                new AttackMockAlways20().ExecuteAttack(attacker, defender);
+                Assert.Equal(initialHitPoints - 2, defender.HitPoints);
+            }
+        }
     }
 }

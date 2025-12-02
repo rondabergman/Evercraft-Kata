@@ -20,7 +20,11 @@ namespace Evercraft_Kata.Tests
                 roll = 19; // Force a non-critical hit
             }
 
-            if (roll >= defender.ArmorClass || roll == 20)
+            if (roll == 20)
+            {
+                defender.HitPoints -= 2;
+            }
+            else if (roll >= defender.ArmorClass || roll == 20)
             {
                 defender.HitPoints -= 1;
             }
@@ -38,10 +42,15 @@ namespace Evercraft_Kata.Tests
                 roll = 20; // Force a critical hit
             }
 
-            if (roll >= defender.ArmorClass || roll == 20)
+            if (roll == 20)
+            {
+                defender.HitPoints -= 2;
+            }
+            else if (roll >= defender.ArmorClass || roll == 20)
             {
                 defender.HitPoints -= 1;
             }
+
         }
     }
 

@@ -14,7 +14,12 @@ namespace Evercraft_Kata.Actions
         public void ExecuteAttack(Character attacker, Character defender)
         {
             int roll = Roll.RollDie();
-            if (roll >= defender.ArmorClass || roll == 20)
+
+            if (roll == 20)
+            {
+                defender.HitPoints -= 2;
+            }
+            else if (roll >= defender.ArmorClass || roll == 20)
             {
                 defender.HitPoints -= 1;
             }
