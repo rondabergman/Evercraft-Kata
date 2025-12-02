@@ -1,0 +1,71 @@
+﻿using Evercraft_Kata.Actions;
+using Evercraft_Kata.Tests;
+
+namespace Evercraft_Kata.Tests.ActionsTests
+{
+    public class ActionsTests
+    {
+        [Fact]
+        public void RollDieTest()
+        {
+            for (int i = 0; i < 1000; i++)
+            {
+                int roll = Evercraft_Kata.Actions.Roll.RollDie();
+                Assert.InRange(roll, 1, 20);
+                Console.WriteLine(roll);
+            }
+        }
+
+        [Fact]
+        public void AttackReducesHitPointsOnSuccessfulHit()
+        {
+            for (int i = 0; i < 100; i++) // Multiple attempts to ensure hit
+            {
+                var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
+                var defender = new Evercraft_Kata.Chracters.Character("Defender");
+                // Mocking a successful attack by setting a low armor class
+                defender.ArmorClass = 1;
+                int initialHitPoints = defender.HitPoints;
+
+                initialHitPoints = defender.HitPoints;
+                new AttackMockNo20().ExecuteAttack(attacker, defender);
+                Assert.Equal(initialHitPoints - 1, defender.HitPoints);
+            }
+        }
+
+        [Fact]
+        public void AttackDoesNotReduceHitPointsOnMiss()
+        {
+            for (int i = 0; i < 100; i++) // Multiple attempts to ensure miss
+            {
+                var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
+                var defender = new Evercraft_Kata.Chracters.Character("Defender");
+                int initialHitPoints = defender.HitPoints;
+
+                // Mocking a miss by setting a high armor class
+                defender.ArmorClass = 21;
+                new AttackMockNo20().ExecuteAttack(attacker, defender);
+                Assert.Equal(initialHitPoints, defender.HitPoints);
+
+            }
+        }
+
+        [Fact]
+        public void AttackReducesHitPointsWith20Roll()
+        {
+            for (int i = 0; i < 100; i++) // Multiple attempts to ensure miss
+            {
+                var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
+                var defender = new Evercraft_Kata.Chracters.Character("Defender");
+                int initialHitPoints = defender.HitPoints;
+
+                // Mocking a miss by setting a high armor class
+                defender.ArmorClass = 21;
+                new AttackMockAlways20().ExecuteAttack(attacker, defender);
+                Assert.Equal(initialHitPoints -1, defender.HitPoints);
+
+            }
+        }
+
+    }
+}
