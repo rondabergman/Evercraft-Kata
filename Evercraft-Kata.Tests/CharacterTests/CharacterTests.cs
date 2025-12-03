@@ -98,5 +98,12 @@ namespace Evercraft_Kata.Tests
 
             Assert.Equal(initialExperience, attacker.ExperiencePoints);
         }
+
+        [Fact]
+        public void CharacterShouldHaveALevelDefaultsTo1()
+        {
+            Character character = new Character("Gimli");
+            Assert.Equal(1, character.Level);
+        }
     }
 }
