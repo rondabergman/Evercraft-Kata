@@ -16,18 +16,24 @@ namespace Evercraft_Kata.Actions
         {
             int roll = Roll.RollDie();
 
-            var mod = Attributes.GetModifier(roll);
+            var modifier = Attributes.GetModifier(roll);
+            defender.Constitution = modifier;
+            defender.HitPoints += defender.Constitution;
 
             if (roll == 20) //Critical hit
             {
-                defender.HitPoints -= 2 + (mod * 2);
+                defender.HitPoints -= 2 + (modifier * 2);
+
+                attacker.ExperiencePoints += 10;
             }
             else if (roll >= defender.ArmorClass)
             {
 
-                int hitPointsToDeduct = (1 + mod > 0) ? (1 + mod) : 1;
+                int hitPointsToDeduct = (1 + modifier > 0) ? (1 + modifier) : 1;
 
                 defender.HitPoints -= 1 + hitPointsToDeduct;
+
+                attacker.ExperiencePoints += 10;
             }
 
             if (defender.HitPoints < 1)

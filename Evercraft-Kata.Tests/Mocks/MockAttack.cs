@@ -10,21 +10,36 @@ using System.Threading.Tasks;
 
 namespace Evercraft_Kata.Tests
 {
-      public class AttackMockVarScore(int mockRoll) : IAttack
+    public class MockAttack(int mockRoll) : IAttack
     {
         public void ExecuteAttack(Character attacker, Character defender)
         {
             int roll = mockRoll;
-            var mod = Attributes.GetModifier(roll);
+
+            var modifier = Attributes.GetModifier(roll);
+            var armor = defender.ArmorClass + modifier;
+            defender.Constitution = modifier;
+            defender.HitPoints += defender.Constitution;
 
             if (roll == 20) //Critical hit
             {
-                defender.HitPoints -= 2 + (attacker.Strength * 2);
+                if (armor >= 20)
+                {
+                    defender.HitPoints -= 1; // Minimum damage on critical hit if armor is too high
+                }
+                else
+                {
+                    defender.HitPoints -= 2 + (modifier * 2);
+                }
+
+                attacker.ExperiencePoints += 10;
             }
             else if (roll >= defender.ArmorClass)
             {
-                int hitPointsToDeduct = (1 + mod > 0) ? (1 + mod) : 1;
+                int hitPointsToDeduct = (1 + modifier > 0) ? (1 + modifier) : 1;
                 defender.HitPoints -= 1 + hitPointsToDeduct;
+
+                attacker.ExperiencePoints += 10;
             }
 
             if (defender.HitPoints < 1)

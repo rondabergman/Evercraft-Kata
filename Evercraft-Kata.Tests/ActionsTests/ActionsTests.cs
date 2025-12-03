@@ -11,7 +11,7 @@ namespace Evercraft_Kata.Tests
         {
             for (int i = 0; i < 1000; i++)
             {
-                int roll = Evercraft_Kata.Actions.Roll.RollDie();
+                int roll = Roll.RollDie();
                 Assert.InRange(roll, 1, 20);
                 Console.WriteLine(roll);
             }
@@ -20,7 +20,8 @@ namespace Evercraft_Kata.Tests
         [Fact]
         public void AttackReducesHitPointsOnSuccessfulHit()
         {
-            int roll = 1;
+            int roll = 0;
+
             for (int i = 0; i < 100; i++) // Multiple attempts to ensure working
             {
                 roll = roll < 20 ? roll + 1 : 1;
@@ -32,8 +33,8 @@ namespace Evercraft_Kata.Tests
                 defender.ArmorClass = 1;
                 int initialHitPoints = defender.HitPoints;
 
-                // Using the AttackMockNo20 to ensure a roll of less than 20
-                new AttackMockVarScore().ExecuteAttack(attacker, defender);
+                // Using the MockAttack to ensure a roll of less than 20
+                new MockAttack(roll).ExecuteAttack(attacker, defender);
 
                 Assert.True(initialHitPoints > defender.HitPoints);
             }
@@ -42,16 +43,22 @@ namespace Evercraft_Kata.Tests
         [Fact]
         public void AttackDoesNotReduceHitPointsOnMiss()
         {
+            int roll = 0;
+
             for (int i = 0; i < 100; i++) // Multiple attempts to ensure working
             {
+                roll = roll < 19 ? roll + 1 : 1;
+                var modifier = Attributes.GetModifier(roll);
+
                 var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
                 var defender = new Evercraft_Kata.Chracters.Character("Defender");
-                int initialHitPoints = defender.HitPoints;
+                int initialHitPoints = defender.HitPoints + modifier;
 
                 // Mocking a miss by setting a high armor class
                 defender.ArmorClass = 21;
-                // Using the AttackMockNo20 to ensure a roll of less than 20
-                new AttackMockNo20().ExecuteAttack(attacker, defender);
+
+                // Using the AttackMock to ensure a roll of less than 20
+                new MockAttack(roll).ExecuteAttack(attacker, defender);
                 Assert.Equal(initialHitPoints, defender.HitPoints);
             }
         }
@@ -59,48 +66,64 @@ namespace Evercraft_Kata.Tests
         [Fact]
         public void AttackReducesHitPointsWith20RollAndArmorOver20()
         {
+            int roll = 20;
+
             for (int i = 0; i < 100; i++) // Multiple attempts to ensure working
             {
                 var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
                 var defender = new Evercraft_Kata.Chracters.Character("Defender");
                 int initialHitPoints = defender.HitPoints;
+                var modifier = Attributes.GetModifier(roll);
 
                 // Mocking a miss by setting a high armor class
                 defender.ArmorClass = 21;
-                // Using the AttackMockAlways20 to ensure a roll of 20
-                new AttackMockAlways20().ExecuteAttack(attacker, defender);
-                Assert.Equal(initialHitPoints -2, defender.HitPoints);
+
+                // Using the AttackMock to ensure a roll of 20
+                new MockAttack(roll).ExecuteAttack(attacker, defender);
+                Assert.Equal(initialHitPoints - 1, defender.HitPoints);
             }
         }
 
         [Fact]
         public void RollOf20DoublesHitPointReduction()
         {
+            int roll = 20;
+
             for (int i = 0; i < 100; i++) // Multiple attempts to ensure working
             {
                 var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
                 var defender = new Evercraft_Kata.Chracters.Character("Defender");
                 int initialHitPoints = defender.HitPoints;
-                // Using the AttackMockAlways20 to ensure a roll of 20
-                new AttackMockAlways20().ExecuteAttack(attacker, defender);
-                Assert.Equal(initialHitPoints - 2, defender.HitPoints);
+                var modifier = Attributes.GetModifier(roll);
+
+                // Using the AttackMock to ensure a roll of 20
+                new MockAttack(roll).ExecuteAttack(attacker, defender);
+                Assert.Equal(initialHitPoints - (2 + modifier * 2), defender.HitPoints);
             }
         }
 
         [Fact]
         public void AttackOnDefenderWith1HitPointKillsDefender()
         {
+            int roll = 0;
+
             for (int i = 0; i < 100; i++) // Multiple attempts to ensure working
             {
+                roll = roll < 19 ? roll + 1 : 1;
+
                 var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
                 var defender = new Evercraft_Kata.Chracters.Character("Defender");
                 int initialHitPoints = defender.HitPoints;
+
                 // Mocking a hit by setting a low armor class
                 defender.ArmorClass = 1;
+
                 // Mocking a kill shot by setting hit points to 1
                 defender.HitPoints = 1;
-                // Using the AttackMockNo20 to ensure a roll of less than 20
-                new AttackMockNo20().ExecuteAttack(attacker, defender);
+
+                // Using the AttackMock to ensure a roll of less than 20
+                new MockAttack(roll).ExecuteAttack(attacker, defender);
+
                 Assert.False(defender.IsAlive);
             }
         }
@@ -141,7 +164,7 @@ namespace Evercraft_Kata.Tests
                 // Mocking a hit by setting a low armor class
                 defender.ArmorClass = 1;
 
-                attacker.Strength = 3; // modifier
+                attacker.Strength = 3;
 
                 // Mocking a kill shot by setting hit points to 3
                 defender.HitPoints = 1;
@@ -151,11 +174,25 @@ namespace Evercraft_Kata.Tests
             }
         }
 
-        [Fact] 
-        public void AttackChangesAttributesOfCharactersCorrectly()
+        [Fact]
+        public void AttackOnDefenderUsingDexterity()
         {
+            int roll = 0;
+
             for (int i = 0; i < 100; i++) // Multiple attempts to ensure working
             {
+                roll = roll < 20 ? roll + 1 : 1;
+                var modifier = Attributes.GetModifier(roll);
+
+                var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
+                var defender = new Evercraft_Kata.Chracters.Character("Defender");
+
+                new MockAttack(roll).ExecuteAttack(attacker, defender);
+                
+                if (defender.ArmorClass <= roll)
+                    Assert.True(defender.HitPoints < 4);
+                else
+                    Assert.Equal(5 + modifier, defender.HitPoints);
             }
         }
     }
