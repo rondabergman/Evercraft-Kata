@@ -10,64 +10,12 @@ using System.Threading.Tasks;
 
 namespace Evercraft_Kata.Tests
 {
-    public class AttackMockNo20 : IAttack
-    {
-        public void ExecuteAttack(Character attacker, Character defender)
-        {
-            int roll = Roll.RollDie();
-            if (roll == 20)
-            {
-                roll = 19; // Force a non-critical hit
-            }
-
-            var mod = Attributes.GetModifier(roll);
-
-            if (roll == 20) //Critical hit
-            {
-                defender.HitPoints -= 2 + (mod * 2);
-            }
-            else if (roll >= defender.ArmorClass)
-            {
-                int hitPointsToDeduct = (1 + mod > 0) ? (1 + mod) : 1;
-                defender.HitPoints -= 1 + hitPointsToDeduct;
-            }
-
-            defender.IsAlive = defender.HitPoints > 0 ? true : false;
-        }
-    }
-
-    public class AttackMockAlways20 : IAttack
-    {
-        public void ExecuteAttack(Character attacker, Character defender)
-        {
-            int roll = Roll.RollDie();
-
-            if (roll != 20)
-            {
-                roll = 20; // Force a critical hit
-            }
-
-            if (roll == 20)
-            {
-                defender.HitPoints -= 2;
-            }
-            else if (roll >= defender.ArmorClass || roll == 20)
-            {
-                defender.HitPoints -= 1;
-            }
-
-            if (defender.HitPoints < 1)
-            {
-                defender.IsAlive = false;
-            }
-        }
-    }
-
-    public class AttackMockVarScore(int mockRoll) : IAttack
+      public class AttackMockVarScore(int mockRoll) : IAttack
     {
         public void ExecuteAttack(Character attacker, Character defender)
         {
             int roll = mockRoll;
+            var mod = Attributes.GetModifier(roll);
 
             if (roll == 20) //Critical hit
             {
@@ -75,7 +23,7 @@ namespace Evercraft_Kata.Tests
             }
             else if (roll >= defender.ArmorClass)
             {
-                int hitPointsToDeduct = (1 + attacker.Strength > 0) ? (1 + attacker.Strength) : 1;
+                int hitPointsToDeduct = (1 + mod > 0) ? (1 + mod) : 1;
                 defender.HitPoints -= 1 + hitPointsToDeduct;
             }
 
