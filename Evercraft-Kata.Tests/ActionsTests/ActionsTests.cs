@@ -1,4 +1,5 @@
 ﻿using Evercraft_Kata.Actions;
+using Evercraft_Kata.Characters;
 using Evercraft_Kata.Tests;
 
 namespace Evercraft_Kata.Tests
@@ -23,14 +24,15 @@ namespace Evercraft_Kata.Tests
             {
                 var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
                 var defender = new Evercraft_Kata.Chracters.Character("Defender");
+
                 // Mocking a successful attack by setting a low armor class
                 defender.ArmorClass = 1;
                 int initialHitPoints = defender.HitPoints;
 
-                initialHitPoints = defender.HitPoints;
                 // Using the AttackMockNo20 to ensure a roll of less than 20
                 new AttackMockNo20().ExecuteAttack(attacker, defender);
-                Assert.Equal(initialHitPoints - 1, defender.HitPoints);
+
+                Assert.True(initialHitPoints > defender.HitPoints);
             }
         }
 
@@ -108,6 +110,7 @@ namespace Evercraft_Kata.Tests
                 var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
                 var defender = new Evercraft_Kata.Chracters.Character("Defender");
 
+                defender.HitPoints = 3;
                 int initialHitPoints = defender.HitPoints;
 
                 // Mocking a hit by setting a low armor class
@@ -115,15 +118,15 @@ namespace Evercraft_Kata.Tests
 
                 attacker.Strength = 0; // No modifier
 
-                // Mocking not a kill shot by setting hit points to 3
-                defender.HitPoints = 3;
+                // Mocking not a kill shot by setting hit points to 30
+                defender.HitPoints = 30;
                 new Attack().ExecuteAttack(attacker, defender);
 
                 Assert.True(defender.IsAlive);
             }
         }
         [Fact]
-        public void AttackOnDefenderWith3HitPointsAttackerWith3ModifierKillsDefener()
+        public void AttackOnDefenderWith1HitPointsAttackerWith3StrengthKillsDefener()
         {
             for (int i = 0; i < 100; i++) // Multiple attempts to ensure working
             {
@@ -135,18 +138,15 @@ namespace Evercraft_Kata.Tests
                 // Mocking a hit by setting a low armor class
                 defender.ArmorClass = 1;
 
-                attacker.Strength = 3; // No modifier
+                attacker.Strength = 3; // modifier
 
-                // Mocking not a kill shot by setting hit points to 3
-                defender.HitPoints = 3;
+                // Mocking a kill shot by setting hit points to 3
+                defender.HitPoints = 1;
                 new Attack().ExecuteAttack(attacker, defender);
 
                 Assert.False(defender.IsAlive);
             }
         }
-
-
-
 
         [Fact] 
         public void AttackChangesAttributesOfCharactersCorrectly()

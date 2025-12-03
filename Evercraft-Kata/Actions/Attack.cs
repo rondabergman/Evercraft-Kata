@@ -1,4 +1,5 @@
-﻿using Evercraft_Kata.Chracters;
+﻿using Evercraft_Kata.Characters;
+using Evercraft_Kata.Chracters;
 using Evercraft_Kata.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,17 @@ namespace Evercraft_Kata.Actions
         {
             int roll = Roll.RollDie();
 
+            var mod = Attributes.GetModifier(roll);
+
             if (roll == 20) //Critical hit
             {
-                defender.HitPoints -= 2 + (attacker.Strength * 2);
+                defender.HitPoints -= 2 + (mod * 2);
             }
             else if (roll >= defender.ArmorClass)
             {
-                int hitPointsToDeduct = (1 + attacker.Strength > 0) ? (1 + attacker.Strength) : 1 ;
+
+                int hitPointsToDeduct = (1 + mod > 0) ? (1 + mod) : 1;
+
                 defender.HitPoints -= 1 + hitPointsToDeduct;
             }
 

@@ -1,4 +1,5 @@
 ﻿using Evercraft_Kata.Actions;
+using Evercraft_Kata.Characters;
 using Evercraft_Kata.Chracters;
 using Evercraft_Kata.Interfaces;
 using System;
@@ -14,25 +15,24 @@ namespace Evercraft_Kata.Tests
         public void ExecuteAttack(Character attacker, Character defender)
         {
             int roll = Roll.RollDie();
-
             if (roll == 20)
             {
                 roll = 19; // Force a non-critical hit
             }
 
-            if (roll == 20)
+            var mod = Attributes.GetModifier(roll);
+
+            if (roll == 20) //Critical hit
             {
-                defender.HitPoints -= 2;
+                defender.HitPoints -= 2 + (mod * 2);
             }
-            else if (roll >= defender.ArmorClass || roll == 20)
+            else if (roll >= defender.ArmorClass)
             {
-                defender.HitPoints -= 1;
+                int hitPointsToDeduct = (1 + mod > 0) ? (1 + mod) : 1;
+                defender.HitPoints -= 1 + hitPointsToDeduct;
             }
 
-            if (defender.HitPoints < 1)
-            {
-                defender.IsAlive = false;
-            }
+            defender.IsAlive = defender.HitPoints > 0 ? true : false;
         }
     }
 
@@ -41,7 +41,7 @@ namespace Evercraft_Kata.Tests
         public void ExecuteAttack(Character attacker, Character defender)
         {
             int roll = Roll.RollDie();
-            
+
             if (roll != 20)
             {
                 roll = 20; // Force a critical hit
