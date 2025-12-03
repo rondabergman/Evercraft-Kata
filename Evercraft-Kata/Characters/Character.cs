@@ -25,6 +25,7 @@ namespace Evercraft_Kata.Chracters
         private int _charisma = 10;
 
         private int _experiencePoints = 0;
+        private int _level = 1;
 
         public Character(string name)
         {
@@ -43,5 +44,6 @@ namespace Evercraft_Kata.Chracters
         public int Wisdom { get => _strength; set => _strength = value; }
         public int Charisma { get => _strength; set => _strength = value; }
         public int ExperiencePoints { get => _experiencePoints; set => _experiencePoints = value; }
+        public int Level { get => _level; set => _level = value; }
     }
 }
