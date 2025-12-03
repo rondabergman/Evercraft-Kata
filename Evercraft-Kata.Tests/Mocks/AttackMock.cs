@@ -63,4 +63,26 @@ namespace Evercraft_Kata.Tests
         }
     }
 
+    public class AttackMockVarScore(int mockRoll) : IAttack
+    {
+        public void ExecuteAttack(Character attacker, Character defender)
+        {
+            int roll = mockRoll;
+
+            if (roll == 20) //Critical hit
+            {
+                defender.HitPoints -= 2 + (attacker.Strength * 2);
+            }
+            else if (roll >= defender.ArmorClass)
+            {
+                int hitPointsToDeduct = (1 + attacker.Strength > 0) ? (1 + attacker.Strength) : 1;
+                defender.HitPoints -= 1 + hitPointsToDeduct;
+            }
+
+            if (defender.HitPoints < 1)
+            {
+                defender.IsAlive = false;
+            }
+        }
+    }
 }

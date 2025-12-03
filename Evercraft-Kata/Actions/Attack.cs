@@ -15,13 +15,14 @@ namespace Evercraft_Kata.Actions
         {
             int roll = Roll.RollDie();
 
-            if (roll == 20)
+            if (roll == 20) //Critical hit
             {
-                defender.HitPoints -= 2;
+                defender.HitPoints -= 2 + (attacker.Strength * 2);
             }
-            else if (roll >= defender.ArmorClass || roll == 20)
+            else if (roll >= defender.ArmorClass)
             {
-                defender.HitPoints -= 1;
+                int hitPointsToDeduct = (1 + attacker.Strength > 0) ? (1 + attacker.Strength) : 1 ;
+                defender.HitPoints -= 1 + hitPointsToDeduct;
             }
 
             if (defender.HitPoints < 1)

@@ -1,4 +1,5 @@
 ﻿
+
 namespace Evercraft_Kata.Chracters
 {
     public enum Alignment
@@ -16,6 +17,13 @@ namespace Evercraft_Kata.Chracters
         private int _hitPoints = 5;
         private bool _isAlive = true;
 
+        private int _strength = 10;
+        private int _dexterity = 10;
+        private int _constitution = 10;
+        private int _intelligence = 10;
+        private int _wisdomh = 10;
+        private int _charisma = 10;
+
         public Character(string name)
         {
             Name = name;
@@ -26,5 +34,11 @@ namespace Evercraft_Kata.Chracters
         public int ArmorClass { get => _armorClass; set => _armorClass = value; }
         public int HitPoints { get => _hitPoints; set => _hitPoints = value; }
         public bool IsAlive { get => _isAlive; set => _isAlive = value; }
+        public int Strength { get => _strength; set => _strength = value; }
+        public int Dexterity { get => _strength; set => _strength = value; }
+        public int Constitution { get => _strength; set => _strength = value; }
+        public int Intelligence { get => _strength; set => _strength = value; }
+        public int Wisdom { get => _strength; set => _strength = value; }
+        public int Charisma { get => _strength; set => _strength = value; }
     }
 }

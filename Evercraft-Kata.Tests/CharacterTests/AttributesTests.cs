@@ -16,10 +16,5 @@ namespace Evercraft_Kata.Tests
             Assert.Equal(10, character.Wisdom);
             Assert.Equal(10, character.Charisma);
         }
-
-        [Fact]
-        public void CharacterShouldHaveAnAlignment()
-        {
-        }
     }
 }
