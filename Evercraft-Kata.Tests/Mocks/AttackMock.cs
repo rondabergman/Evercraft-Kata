@@ -29,7 +29,7 @@ namespace Evercraft_Kata.Tests
                 defender.HitPoints -= 1;
             }
 
-            if (defender.HitPoints == 0)
+            if (defender.HitPoints < 1)
             {
                 defender.IsAlive = false;
             }
@@ -56,7 +56,7 @@ namespace Evercraft_Kata.Tests
                 defender.HitPoints -= 1;
             }
 
-            if (defender.HitPoints == 0)
+            if (defender.HitPoints < 1)
             {
                 defender.IsAlive = false;
             }

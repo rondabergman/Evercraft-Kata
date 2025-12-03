@@ -1,7 +1,7 @@
 ﻿using Evercraft_Kata.Actions;
 using Evercraft_Kata.Tests;
 
-namespace Evercraft_Kata.Tests.ActionsTests
+namespace Evercraft_Kata.Tests
 {
     public class ActionsTests
     {
@@ -92,12 +92,30 @@ namespace Evercraft_Kata.Tests.ActionsTests
                 int initialHitPoints = defender.HitPoints;
                 // Mocking a hit by setting a low armor class
                 defender.ArmorClass = 1;
-                // Moking a kill shot by setting hit points to 1
+                // Mocking a kill shot by setting hit points to 1
                 defender.HitPoints = 1;
                 // Using the AttackMockNo20 to ensure a roll of less than 20
                 new AttackMockNo20().ExecuteAttack(attacker, defender);
                 Assert.False(defender.IsAlive);
             }
         }
+
+        [Fact]
+        public void AttackOnDefenderWith3HitPointsStillAlive()
+        {
+            for (int i = 0; i < 100; i++) // Multiple attempts to ensure working
+            {
+                var attacker = new Evercraft_Kata.Chracters.Character("Attacker");
+                var defender = new Evercraft_Kata.Chracters.Character("Defender");
+                int initialHitPoints = defender.HitPoints;
+                // Mocking a hit by setting a low armor class
+                defender.ArmorClass = 1;
+                // Mocking not a kill shot by setting hit points to 3
+                defender.HitPoints = 3;
+                new Attack().ExecuteAttack(attacker, defender);
+                Assert.True(defender.IsAlive);
+            }
+        }
+
     }
 }
