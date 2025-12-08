@@ -94,7 +94,7 @@ namespace Evercraft_Kata.Tests
             Character defender = new Character("Orc");
             int initialExperience = attacker.ExperiencePoints;
 
-            new MockAttack(1).ExecuteAttack(attacker, defender); 
+            new Attack().ExecuteAttack(attacker, defender, 1);// Critical hit
 
             Assert.Equal(initialExperience, attacker.ExperiencePoints);
         }
@@ -113,7 +113,7 @@ namespace Evercraft_Kata.Tests
             Character defender = new Character("Loser");
             attacker.ExperiencePoints = 990;
 
-            new MockAttack(20).ExecuteAttack(attacker, defender); // Critical hit
+            new Attack().ExecuteAttack(attacker, defender, 20);// Critical hit
 
             Assert.Equal(2, attacker.Level);
         }

@@ -179,7 +179,7 @@ namespace Evercraft_Kata.Tests
                 defender.HitPoints = 1;
 
                 var roll = Roll.RollDie();
-                new Attack().ExecuteAttack(attacker, defender, roll);
+                new Attack().ExecuteAttack(attacker, defender, 1);
 
                 Assert.False(defender.IsAlive);
             }
