@@ -22,9 +22,9 @@ namespace Evercraft_Kata.Characters
 
         private static void InitializeModifiers()
         {
-            int adder = -6;
+            int adder = -5;
 
-            for (int i = 1; i < modifier.Length; i++)
+            for (int i = 1; i <= modifier.Length; i++)
             {
                 if (i % 2 == 0)
                 {

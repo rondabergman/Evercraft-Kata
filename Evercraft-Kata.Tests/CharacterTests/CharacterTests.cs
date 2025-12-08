@@ -82,7 +82,7 @@ namespace Evercraft_Kata.Tests
             Character defender = new Character("Orc");
             int initialExperience = attacker.ExperiencePoints;
 
-            new MockAttack(20).ExecuteAttack(attacker, defender); // Critical hit
+            new Attack().ExecuteAttack(attacker, defender, 20);// Critical hit
 
             Assert.Equal(initialExperience + 10, attacker.ExperiencePoints);
         }
@@ -94,16 +94,38 @@ namespace Evercraft_Kata.Tests
             Character defender = new Character("Orc");
             int initialExperience = attacker.ExperiencePoints;
 
-            new MockAttack(1).ExecuteAttack(attacker, defender); // Critical hit
+            new MockAttack(1).ExecuteAttack(attacker, defender); 
 
             Assert.Equal(initialExperience, attacker.ExperiencePoints);
         }
 
         [Fact]
-        public void CharacterShouldHaveALevelDefaultsTo1()
+        public void CharacterShouldHaveALevelDefaultsTo0()
         {
             Character character = new Character("Gimli");
-            Assert.Equal(1, character.Level);
+            Assert.Equal(0, character.Level);
+        }
+
+        [Fact]
+        public void CharacterShouldLevelUpWithEach1000ExperiencePoints()
+        {
+            Character attacker = new Character("Gimli");
+            Character defender = new Character("Loser");
+            attacker.ExperiencePoints = 990;
+
+            new MockAttack(20).ExecuteAttack(attacker, defender); // Critical hit
+
+            Assert.Equal(2, attacker.Level);
+        }
+
+        [Fact]
+        public void CharacterForEachLevelHitPointsIncreaseBy5PlusConModifier()
+        {
+            Character character = new Character("Gimli");
+            character.ExperiencePoints = 1000;
+           
+            Assert.Equal(15, character.HitPoints + character.Constitution);
         }
     }
 }
+

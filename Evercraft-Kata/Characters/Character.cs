@@ -21,11 +21,11 @@ namespace Evercraft_Kata.Chracters
         private int _dexterity = 10;
         private int _constitution = 10;
         private int _intelligence = 10;
-        private int _wisdomh = 10;
+        private int _wisdom = 10;
         private int _charisma = 10;
 
         private int _experiencePoints = 0;
-        private int _level = 1;
+        private int _level = 0;
 
         public Character(string name)
         {
@@ -38,12 +38,20 @@ namespace Evercraft_Kata.Chracters
         public int HitPoints { get => _hitPoints; set => _hitPoints = value; }
         public bool IsAlive { get => _isAlive; set => _isAlive = value; }
         public int Strength { get => _strength; set => _strength = value; }
-        public int Dexterity { get => _strength; set => _strength = value; }
-        public int Constitution { get => _strength; set => _strength = value; }
-        public int Intelligence { get => _strength; set => _strength = value; }
-        public int Wisdom { get => _strength; set => _strength = value; }
-        public int Charisma { get => _strength; set => _strength = value; }
-        public int ExperiencePoints { get => _experiencePoints; set => _experiencePoints = value; }
-        public int Level { get => _level; set => _level = value; }
+        public int Dexterity { get => _dexterity; set => _dexterity = value; }
+        public int Constitution { get => _constitution; set => _constitution = value; }
+        public int Intelligence { get => _intelligence; set => _intelligence = value; }
+        public int Wisdom { get => _wisdom; set => _wisdom = value; }
+        public int Charisma { get => _charisma; set => _charisma = value; }
+        public int ExperiencePoints
+        {
+            get => _experiencePoints;
+            set
+            {
+                _experiencePoints = value;
+                _level = (_experiencePoints / 1000) + 1;
+            }
+        }
+        public int Level { get => _level; }
     }
 }

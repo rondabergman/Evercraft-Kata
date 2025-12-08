@@ -17,28 +17,29 @@ namespace Evercraft_Kata.Tests
             int roll = mockRoll;
 
             var modifier = Attributes.GetModifier(roll);
-            var armor = defender.ArmorClass + modifier;
-            defender.Constitution = modifier;
+            defender.ArmorClass += defender.Dexterity;
             defender.HitPoints += defender.Constitution;
 
-            if (roll == 20) //Critical hit
+            if (roll >= defender.ArmorClass)
             {
-                if (armor >= 20)
+                if (roll == 20) //Critical hit
                 {
-                    defender.HitPoints -= 1; // Minimum damage on critical hit if armor is too high
+                    attacker.Strength = modifier * 2;
+                    defender.HitPoints -= 2 + (attacker.Strength * 2);
+                    attacker.ExperiencePoints += 10;
+                    return;
                 }
-                else
-                {
-                    defender.HitPoints -= 2 + (modifier * 2);
-                }
+                attacker.Strength = modifier;
+
+                int hitPointsToDeduct = (1 + attacker.Strength > 0) ? (1 + attacker.Strength) : 1;
+
+                defender.HitPoints -= 1 + hitPointsToDeduct;
 
                 attacker.ExperiencePoints += 10;
             }
-            else if (roll >= defender.ArmorClass)
+            else if (roll == 20) //Critical hit
             {
-                int hitPointsToDeduct = (1 + modifier > 0) ? (1 + modifier) : 1;
-                defender.HitPoints -= 1 + hitPointsToDeduct;
-
+                defender.HitPoints -= 2;
                 attacker.ExperiencePoints += 10;
             }
 

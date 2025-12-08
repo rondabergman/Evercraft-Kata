@@ -10,29 +10,34 @@ using System.Threading.Tasks;
 namespace Evercraft_Kata.Actions
 {
     // Remove static modifier and implement IAttack as an instance class
-    public class Attack : IAttack
+    public class Attack 
     {
-        public void ExecuteAttack(Character attacker, Character defender)
+        public void ExecuteAttack(Character attacker, Character defender, int roll)
         {
-            int roll = Roll.RollDie();
-
             var modifier = Attributes.GetModifier(roll);
-            defender.Constitution = modifier;
+            defender.ArmorClass += defender.Dexterity;
             defender.HitPoints += defender.Constitution;
 
-            if (roll == 20) //Critical hit
+            if (roll >= defender.ArmorClass)
             {
-                defender.HitPoints -= 2 + (modifier * 2);
+                if (roll == 20) //Critical hit
+                {
+                    attacker.Strength = modifier * 2;
+                    defender.HitPoints -= 2 + (attacker.Strength * 2);
+                    attacker.ExperiencePoints += 10;
+                    return;
+                }
+                attacker.Strength = modifier;
 
-                attacker.ExperiencePoints += 10;
-            }
-            else if (roll >= defender.ArmorClass)
-            {
-
-                int hitPointsToDeduct = (1 + modifier > 0) ? (1 + modifier) : 1;
+                int hitPointsToDeduct = (1 + attacker.Strength > 0) ? (1 + attacker.Strength) : 1;
 
                 defender.HitPoints -= 1 + hitPointsToDeduct;
 
+                attacker.ExperiencePoints += 10;
+            }
+            else if (roll == 20) //Critical hit
+            {
+                defender.HitPoints -= 2;
                 attacker.ExperiencePoints += 10;
             }
 
