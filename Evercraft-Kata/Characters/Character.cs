@@ -1,18 +1,12 @@
 ﻿
 
+using static Evercraft_Kata.Helpers.Enums;
+
 namespace Evercraft_Kata.Chracters
 {
-    public enum Alignment
-    {
-        Good,
-        Neutral,
-        Evil
-    }
-
     public class Character
     {
         private string _name = string.Empty;
-        private Alignment _alignment = Alignment.Neutral;
         private int _armorClass = 10;
         private int _hitPoints = 5;
         private bool _isAlive = true;
@@ -27,13 +21,15 @@ namespace Evercraft_Kata.Chracters
         private int _experiencePoints = 0;
         private int _level = 0;
 
+        private AlignmentType _alignment = AlignmentType.Neutral;
+       // private CharacterClass = 
+
         public Character(string name)
         {
             Name = name;
         }
 
         public string Name { get => _name; set => _name = value; }
-        public Alignment Alignment { get => _alignment; set => _alignment = value; }
         public int ArmorClass { get => _armorClass; set => _armorClass = value; }
         public int HitPoints { get => _hitPoints; set => _hitPoints = value; }
         public bool IsAlive { get => _isAlive; set => _isAlive = value; }
@@ -53,5 +49,6 @@ namespace Evercraft_Kata.Chracters
             }
         }
         public int Level { get => _level; }
+        public AlignmentType Alignment { get => _alignment; set => _alignment = value; }
     }
 }

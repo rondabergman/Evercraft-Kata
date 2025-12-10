@@ -1,6 +1,8 @@
 ﻿using Evercraft_Kata.Actions;
 using Evercraft_Kata.Chracters;
+using Evercraft_Kata.Helpers;
 using Xunit;
+using static Evercraft_Kata.Helpers.Enums;
 
 namespace Evercraft_Kata.Tests
 {
@@ -17,15 +19,15 @@ namespace Evercraft_Kata.Tests
         public void CharacterShouldHaveAnAlignment()
         {
             Character character = new Character("Aragorn");
-            character.Alignment = Alignment.Good;
-            Assert.Equal(Alignment.Good, character.Alignment);
+            character.Alignment = AlignmentType.Good;
+            Assert.Equal(AlignmentType.Good, character.Alignment);
         }
 
         [Fact]
         public void CharacterShouldDefaultToNeutralAlignment()
         {
             Character character = new Character("Legolas");
-            Assert.Equal(Alignment.Neutral, character.Alignment);
+            Assert.Equal(AlignmentType.Neutral, character.Alignment);
         }
 
         [Fact]
@@ -123,8 +125,16 @@ namespace Evercraft_Kata.Tests
         {
             Character character = new Character("Gimli");
             character.ExperiencePoints = 1000;
-           
+
             Assert.Equal(15, character.HitPoints + character.Constitution);
+        }
+
+        [Fact]
+        public void CharacterShouldHaveAClassAttribute()
+        {
+            Character character = new Character("Gandalf");
+
+            Assert.NotNull(character.CharacterClass);
         }
     }
 }
