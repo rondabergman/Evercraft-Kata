@@ -1,5 +1,5 @@
 ﻿using Evercraft_Kata.Actions;
-using Evercraft_Kata.Chracters;
+using Evercraft_Kata.Characters;
 using Evercraft_Kata.Helpers;
 using Xunit;
 using static Evercraft_Kata.Helpers.Enums;
@@ -117,7 +117,7 @@ namespace Evercraft_Kata.Tests
 
             new Attack().ExecuteAttack(attacker, defender, 20);// Critical hit
 
-            Assert.Equal(2, attacker.Level);
+            Assert.Equal(1, attacker.Level);
         }
 
         [Fact]
@@ -134,7 +134,7 @@ namespace Evercraft_Kata.Tests
         {
             Character character = new Character("Gandalf");
 
-            Assert.NotNull(character.CharacterClass);
+            Assert.Equal(Enums.ClassType.None, character.CharacterClass);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Evercraft_Kata.Characters;
-using Evercraft_Kata.Chracters;
-using Evercraft_Kata.Interfaces;
+using static Evercraft_Kata.Helpers.Calculations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,30 +9,18 @@ using System.Threading.Tasks;
 namespace Evercraft_Kata.Actions
 {
     // Remove static modifier and implement IAttack as an instance class
-    public class Attack 
+    public class Attack
     {
         public void ExecuteAttack(Character attacker, Character defender, int roll)
         {
-            var modifier = Attributes.GetModifier(roll);
             defender.ArmorClass += defender.Dexterity;
             defender.HitPoints += defender.Constitution;
 
             if (roll >= defender.ArmorClass)
             {
-                if (roll == 20) //Critical hit
-                {
-                    attacker.Strength = modifier * 2;
-                    defender.HitPoints -= 2 + (attacker.Strength * 2);
-                    attacker.ExperiencePoints += 10;
-                    return;
-                }
-                attacker.Strength = modifier;
-
-                int hitPointsToDeduct = (1 + attacker.Strength > 0) ? (1 + attacker.Strength) : 1;
-
-                defender.HitPoints -= 1 + hitPointsToDeduct;
-
+                defender.HitPoints -= (CalculateAttackScore(roll, attacker));
                 attacker.ExperiencePoints += 10;
+                return;
             }
             else if (roll == 20) //Critical hit
             {

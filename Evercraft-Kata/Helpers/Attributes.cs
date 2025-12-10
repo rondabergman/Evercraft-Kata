@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Evercraft_Kata.Characters
+namespace Evercraft_Kata.Helpers
 {
     public static class Attributes
     {

@@ -15,11 +15,11 @@ namespace Evercraft_Kata.Helpers
             Good = 1
         }
 
-        public enum CharacterClass
+        public enum ClassType
         {
             None = 0,
             Fighter = 1,
-            Rouger = 2,
+            Rogue = 2,
             Monk = 3,
             Paladin = 4
         }

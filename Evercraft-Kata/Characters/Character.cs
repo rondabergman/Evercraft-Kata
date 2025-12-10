@@ -2,7 +2,7 @@
 
 using static Evercraft_Kata.Helpers.Enums;
 
-namespace Evercraft_Kata.Chracters
+namespace Evercraft_Kata.Characters
 {
     public class Character
     {
@@ -22,7 +22,7 @@ namespace Evercraft_Kata.Chracters
         private int _level = 0;
 
         private AlignmentType _alignment = AlignmentType.Neutral;
-       // private CharacterClass = 
+        private ClassType _characterClass = ClassType.None;
 
         public Character(string name)
         {
@@ -45,10 +45,20 @@ namespace Evercraft_Kata.Chracters
             set
             {
                 _experiencePoints = value;
-                _level = (_experiencePoints / 1000) + 1;
+                _level = (_experiencePoints / 1000);
             }
         }
         public int Level { get => _level; }
         public AlignmentType Alignment { get => _alignment; set => _alignment = value; }
+        public ClassType CharacterClass
+        {
+            get => _characterClass;
+            set
+            {
+                _characterClass = value;
+                if (value == ClassType.Fighter)
+                    _hitPoints += 5; // Fighters get +5 hit points
+            }
+        }
     }
 }

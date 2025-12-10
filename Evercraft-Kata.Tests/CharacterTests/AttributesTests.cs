@@ -1,5 +1,5 @@
 ﻿using Xunit;
-using Evercraft_Kata.Chracters;
+using Evercraft_Kata.Characters;
 
 namespace Evercraft_Kata.Tests
 {
