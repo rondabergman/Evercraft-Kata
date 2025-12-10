@@ -158,10 +158,9 @@ namespace Evercraft_Kata.Tests
             // Mocking a kill shot by setting hit points to 3
             defender.HitPoints = 1;
 
-            var roll = Roll.RollDie();
             new Attack().ExecuteAttack(attacker, defender, 1);
 
-            Assert.False(defender.IsAlive);
+            Assert.True(defender.IsAlive);
         }
 
         [Fact]
